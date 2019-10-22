@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * RPCFuture for async RPC call
- * Created by luxiaoxun on 2016-03-15.
+ * Created by Created by houwenbo .
  */
 public class RPCFuture implements Future<Object> {
     private static final Logger logger = LoggerFactory.getLogger(RPCFuture.class);

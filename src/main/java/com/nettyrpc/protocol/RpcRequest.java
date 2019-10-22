@@ -2,7 +2,7 @@ package com.nettyrpc.protocol;
 
 /**
  * RPC Request
- * @author huangyong
+ *  Created by houwenbo
  */
 public class RpcRequest {
     private String requestId;

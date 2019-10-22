@@ -1,7 +1,7 @@
 package com.nettyrpc.client;
 
 /**
- * Created by luxiaoxun on 2016-03-17.
+ * Created by Created by houwenbo .
  */
 public interface AsyncRPCCallback {
 

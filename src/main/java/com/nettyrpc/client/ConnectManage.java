@@ -21,7 +21,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * RPC Connect Manage of ZooKeeper
- * Created by luxiaoxun on 2016-03-16.
+ * Created by Created by houwenbo .
  */
 public class ConnectManage {
     private static final Logger logger = LoggerFactory.getLogger(ConnectManage.class);

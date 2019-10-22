@@ -3,7 +3,7 @@ package com.nettyrpc.registry;
 /**
  * ZooKeeper constant
  *
- * @author huangyong
+ *  Created by houwenbo
  */
 public interface Constant {
 

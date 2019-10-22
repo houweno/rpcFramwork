@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 服务注册
  *
- * @author huangyong
- * @author luxiaoxun
+ * Created by houwenbo
  */
 public class ServiceRegistry {
 

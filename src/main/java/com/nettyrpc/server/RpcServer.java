@@ -30,7 +30,7 @@ import org.springframework.context.ApplicationContextAware;
 /**
  * RPC Server
  *
- * @author huangyong, luxiaoxun
+ * Created by houwenbo
  */
 public class RpcServer implements ApplicationContextAware, InitializingBean {
 
