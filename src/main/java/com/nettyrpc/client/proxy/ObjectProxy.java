@@ -81,15 +81,6 @@ public class ObjectProxy<T> implements InvocationHandler, IAsyncObjectProxy {
             parameterTypes[i] = getClassType(args[i]);
         }
         request.setParameterTypes(parameterTypes);
-//        Method[] methods = clazz.getDeclaredMethods();
-//        for (int i = 0; i < methods.length; ++i) {
-//            // Bug: if there are 2 methods have the same name
-//            if (methods[i].getName().equals(methodName)) {
-//                parameterTypes = methods[i].getParameterTypes();
-//                request.setParameterTypes(parameterTypes); // get parameter types
-//                break;
-//            }
-//        }
 
         LOGGER.debug(className);
         LOGGER.debug(methodName);
@@ -99,6 +90,18 @@ public class ObjectProxy<T> implements InvocationHandler, IAsyncObjectProxy {
         for (int i = 0; i < args.length; ++i) {
             LOGGER.debug(args[i].toString());
         }
+
+        return request;
+    }
+
+    /**
+     * 构造获取服务端接口列表的请求
+     * @return
+     */
+    private RpcRequest createRequestforInterface() {
+        RpcRequest request = new RpcRequest();
+        request.setRequestId(UUID.randomUUID().toString());
+        request.setClassName("getInterface");
 
         return request;
     }
