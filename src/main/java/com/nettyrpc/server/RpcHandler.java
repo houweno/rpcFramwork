@@ -7,6 +7,8 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import net.sf.cglib.reflect.FastClass;
@@ -55,6 +57,14 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
     }
 
     private Object handle(RpcRequest request) throws Throwable {
+        if(request.getClassName().equals("getInterface")){
+            List<String> interfaces=new ArrayList<String>();
+            for(Map.Entry<String, Object> entry : handlerMap.entrySet()){
+                String mapKey = entry.getKey();
+                interfaces.add(mapKey);
+            }
+            return interfaces;
+        }
         String className   = request.getClassName();
         Object serviceBean = handlerMap.get(className);
 
@@ -72,16 +82,8 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
             logger.debug(parameters[i].toString());
         }
 
-        // JDK reflect
-        /*Method method = serviceClass.getMethod(methodName, parameterTypes);
-        method.setAccessible(true);
-        return method.invoke(serviceBean, parameters);*/
-
-        // Cglib reflect
         FastClass serviceFastClass = FastClass.create(serviceClass);
-//        FastMethod serviceFastMethod = serviceFastClass.getMethod(methodName, parameterTypes);
-//        return serviceFastMethod.invoke(serviceBean, parameters);
-        // for higher-performance
+
         int methodIndex = serviceFastClass.getIndex(methodName, parameterTypes);
         return serviceFastClass.invoke(methodIndex, serviceBean, parameters);
     }

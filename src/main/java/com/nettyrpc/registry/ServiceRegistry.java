@@ -29,7 +29,7 @@ public class ServiceRegistry {
         this.registryAddress = registryAddress;
     }
 
-    public void register(String data) {
+    public void register(byte[] data) {
         if (data != null) {
             ZooKeeper zk = connectServer();
             if (zk != null) {
@@ -73,10 +73,9 @@ public class ServiceRegistry {
         }
     }
 
-    private void createNode(ZooKeeper zk, String data) {
+    private void createNode(ZooKeeper zk, byte[] data) {
         try {
-            byte[] bytes = data.getBytes();
-            String path = zk.create(Constant.ZK_DATA_PATH, bytes, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+            String path = zk.create(Constant.ZK_DATA_PATH, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
             logger.debug("create zookeeper node ({} => {})", path, data);
         } catch (KeeperException e) {
             logger.error("", e);

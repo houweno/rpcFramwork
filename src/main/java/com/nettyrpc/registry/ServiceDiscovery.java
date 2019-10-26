@@ -7,6 +7,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.nettyrpc.client.ConnectManage;
+import com.nettyrpc.protocol.ByteObject;
+import com.nettyrpc.protocol.ServerData;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
@@ -25,7 +27,7 @@ public class ServiceDiscovery {
 
     private CountDownLatch latch = new CountDownLatch(1);
 
-    private volatile List<String> dataList = new ArrayList<>();
+    private volatile List<ServerData> dataList = new ArrayList<>();
 
     private String registryAddress;
     private ZooKeeper zookeeper;
@@ -38,8 +40,8 @@ public class ServiceDiscovery {
         }
     }
 
-    public String discover() {
-        String data = null;
+    public ServerData discover() {
+        ServerData data = null;
         int size = dataList.size();
         if (size > 0) {
             if (size == 1) {
@@ -81,10 +83,10 @@ public class ServiceDiscovery {
                     }
                 }
             });
-            List<String> dataList = new ArrayList<>();
+            List<ServerData> dataList = new ArrayList<>();
             for (String node : nodeList) {
                 byte[] bytes = zk.getData(Constant.ZK_REGISTRY_PATH + "/" + node, false, null);
-                dataList.add(new String(bytes));
+                dataList.add((ServerData) ByteObject.ByteToObject(bytes));
             }
             logger.debug("node data: {}", dataList);
             this.dataList = dataList;

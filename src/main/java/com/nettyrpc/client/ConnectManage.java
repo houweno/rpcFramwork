@@ -1,5 +1,6 @@
 package com.nettyrpc.client;
 
+import com.nettyrpc.protocol.ServerData;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -54,19 +55,17 @@ public class ConnectManage {
         return connectManage;
     }
 
-    public void updateConnectedServer(List<String> allServerAddress) {
+    public void updateConnectedServer(List<ServerData> allServerAddress) {
         if (allServerAddress != null) {
             if (allServerAddress.size() > 0) {  // Get available server node
                 //update local serverNodes cache
                 HashSet<InetSocketAddress> newAllServerNodeSet = new HashSet<InetSocketAddress>();
                 for (int i = 0; i < allServerAddress.size(); ++i) {
-                    String[] array = allServerAddress.get(i).split(":");
-                    if (array.length == 2) { // Should check IP and port
-                        String host = array[0];
-                        int port = Integer.parseInt(array[1]);
+                        String host = allServerAddress.get(i).getServerIp();
+                        int port = Integer.valueOf(allServerAddress.get(i).getServerPort());
                         final InetSocketAddress remotePeer = new InetSocketAddress(host, port);
                         newAllServerNodeSet.add(remotePeer);
-                    }
+
                 }
 
                 // Add new server node

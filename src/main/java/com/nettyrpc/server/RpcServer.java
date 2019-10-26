@@ -1,9 +1,6 @@
 package com.nettyrpc.server;
 
-import com.nettyrpc.protocol.RpcDecoder;
-import com.nettyrpc.protocol.RpcEncoder;
-import com.nettyrpc.protocol.RpcRequest;
-import com.nettyrpc.protocol.RpcResponse;
+import com.nettyrpc.protocol.*;
 import com.nettyrpc.registry.ServiceRegistry;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -14,7 +11,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -41,10 +40,10 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
 
     private Map<String, Object> handlerMap = new HashMap<>();
     private static ThreadPoolExecutor threadPoolExecutor;
-
+    private static List<String> interfaces ;
     private EventLoopGroup bossGroup = null;
     private EventLoopGroup workerGroup = null;
-
+    private ServerData serverData = new ServerData();
     public RpcServer(String serverAddress) {
         this.serverAddress = serverAddress;
     }
@@ -52,6 +51,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
     public RpcServer(String serverAddress, ServiceRegistry serviceRegistry) {
         this.serverAddress = serverAddress;
         this.serviceRegistry = serviceRegistry;
+        this.interfaces=new ArrayList<String>();
     }
 
     @Override
@@ -61,6 +61,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
             for (Object serviceBean : serviceBeanMap.values()) {
                 String interfaceName = serviceBean.getClass().getAnnotation(RpcService.class).value().getName();
                 logger.info("Loading service: {}", interfaceName);
+                interfaces.add(interfaceName);
                 handlerMap.put(interfaceName, serviceBean);
             }
         }
@@ -123,12 +124,14 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
             String[] array = serverAddress.split(":");
             String host = array[0];
             int port = Integer.parseInt(array[1]);
-
+            serverData.setServerIp(host);
+            serverData.setServerPort(String.valueOf(port));
+            serverData.setServerInterfaces(interfaces);
             ChannelFuture future = bootstrap.bind(host, port).sync();
             logger.info("Server started on port {}", port);
 
             if (serviceRegistry != null) {
-                serviceRegistry.register(serverAddress);
+                serviceRegistry.register(ByteObject.ObjectToByte(serverData));
             }
 
             future.channel().closeFuture().sync();
