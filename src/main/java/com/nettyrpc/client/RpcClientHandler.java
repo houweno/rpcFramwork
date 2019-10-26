@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.SocketAddress;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
@@ -21,6 +22,8 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
 
     private volatile Channel channel;
     private SocketAddress remotePeer;
+    private List<String> serverInterfaces;
+
 
     public Channel getChannel() {
         return channel;
@@ -79,5 +82,13 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
         }
 
         return rpcFuture;
+    }
+
+    public List<String> getServerInterfaces() {
+        return serverInterfaces;
+    }
+
+    public void setServerInterfaces(List<String> serverInterfaces) {
+        this.serverInterfaces = serverInterfaces;
     }
 }

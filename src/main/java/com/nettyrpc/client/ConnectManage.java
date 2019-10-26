@@ -1,5 +1,6 @@
 package com.nettyrpc.client;
 
+import com.nettyrpc.protocol.RpcRequest;
 import com.nettyrpc.protocol.ServerData;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -65,14 +66,14 @@ public class ConnectManage {
                         int port = Integer.valueOf(allServerAddress.get(i).getServerPort());
                         final InetSocketAddress remotePeer = new InetSocketAddress(host, port);
                         newAllServerNodeSet.add(remotePeer);
-
+                        if (!connectedServerNodes.keySet().contains(remotePeer)) {
+                            connectServerNode(remotePeer,allServerAddress.get(i).getServerInterfaces());
+                        }
                 }
 
                 // Add new server node
                 for (final InetSocketAddress serverNodeAddress : newAllServerNodeSet) {
-                    if (!connectedServerNodes.keySet().contains(serverNodeAddress)) {
-                        connectServerNode(serverNodeAddress);
-                    }
+
                 }
 
                 // Close and remove invalid server nodes
@@ -103,15 +104,7 @@ public class ConnectManage {
         }
     }
 
-    public void reconnect(final RpcClientHandler handler, final SocketAddress remotePeer) {
-        if (handler != null) {
-            connectedHandlers.remove(handler);
-            connectedServerNodes.remove(handler.getRemotePeer());
-        }
-        connectServerNode((InetSocketAddress) remotePeer);
-    }
-
-    private void connectServerNode(final InetSocketAddress remotePeer) {
+    private void connectServerNode(final InetSocketAddress remotePeer,List<String> interfaces) {
         threadPoolExecutor.submit(new Runnable() {
             @Override
             public void run() {
@@ -127,6 +120,7 @@ public class ConnectManage {
                         if (channelFuture.isSuccess()) {
                             logger.debug("Successfully connect to remote server. remote peer = " + remotePeer);
                             RpcClientHandler handler = channelFuture.channel().pipeline().get(RpcClientHandler.class);
+                            handler.setServerInterfaces(interfaces);
                             addHandler(handler);
                         }
                     }
@@ -160,7 +154,7 @@ public class ConnectManage {
         }
     }
 
-    public RpcClientHandler chooseHandler() {
+    public RpcClientHandler chooseHandler(RpcRequest request) {
         int size = connectedHandlers.size();
         while (isRuning && size <= 0) {
             try {

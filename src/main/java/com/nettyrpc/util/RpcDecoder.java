@@ -1,5 +1,6 @@
-package com.nettyrpc.protocol;
+package com.nettyrpc.util;
 
+import com.nettyrpc.protocol.SerializationUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;

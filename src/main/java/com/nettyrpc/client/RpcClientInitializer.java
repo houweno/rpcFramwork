@@ -1,7 +1,7 @@
 package com.nettyrpc.client;
 
-import com.nettyrpc.protocol.RpcDecoder;
-import com.nettyrpc.protocol.RpcEncoder;
+import com.nettyrpc.util.RpcDecoder;
+import com.nettyrpc.util.RpcEncoder;
 import com.nettyrpc.protocol.RpcRequest;
 import com.nettyrpc.protocol.RpcResponse;
 import io.netty.channel.ChannelInitializer;
