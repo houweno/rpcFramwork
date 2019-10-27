@@ -5,7 +5,7 @@ import com.nettyrpc.registry.ServiceDiscovery;
 import com.nettyrpc.test.client.HelloService;
 
 /**
- * Created by luxiaoxun on 2016-03-11.
+ * Created by houwenbo.
  */
 public class Benchmark {
 

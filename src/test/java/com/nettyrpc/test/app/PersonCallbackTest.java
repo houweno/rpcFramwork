@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Created by luxiaoxun on 2016/3/17.
+ * Created by houwenbo.
  */
 public class PersonCallbackTest {
     public static void main(String[] args) {

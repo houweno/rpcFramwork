@@ -9,7 +9,7 @@ import com.nettyrpc.test.client.HelloService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by luxiaoxun on 2016/3/16.
+ * Created by houwenbo.
  */
 public class BenchmarkAsync {
     public static void main(String[] args) throws InterruptedException {

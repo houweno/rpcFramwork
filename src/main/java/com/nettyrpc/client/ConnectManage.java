@@ -72,11 +72,6 @@ public class ConnectManage {
                         }
                 }
 
-                // Add new server node
-                for (final InetSocketAddress serverNodeAddress : newAllServerNodeSet) {
-
-                }
-
                 // Close and remove invalid server nodes
                 for (int i = 0; i < connectedHandlers.size(); ++i) {
                     RpcClientHandler connectedServerHandler = connectedHandlers.get(i);
@@ -156,10 +151,14 @@ public class ConnectManage {
     }
 
     public RpcClientHandler chooseHandler(RpcRequest request) {
+        System.out.println("####################"+request.getClassName());
         int size = connectedHandlers.size();
-        while (isRuning && size <= 0) {
+        while ( isRuning&&size <= 0) {
             try {
-                waitingForHandler();
+                boolean available = waitingForHandler();
+                if (available) {
+                    size = connectedHandlers.size();
+                }
             } catch (InterruptedException e) {
                 logger.error("Waiting for available node is interrupted! ", e);
                 throw new RuntimeException("Can't connect any servers!", e);
