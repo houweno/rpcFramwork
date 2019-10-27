@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -158,17 +159,16 @@ public class ConnectManage {
         int size = connectedHandlers.size();
         while (isRuning && size <= 0) {
             try {
-                boolean available = waitingForHandler();
-                if (available) {
-                    size = connectedHandlers.size();
-                }
+                waitingForHandler();
             } catch (InterruptedException e) {
                 logger.error("Waiting for available node is interrupted! ", e);
                 throw new RuntimeException("Can't connect any servers!", e);
             }
         }
-        int index = (roundRobin.getAndAdd(1) + size) % size;
-        return connectedHandlers.get(index);
+        List<RpcClientHandler> availableList=getRequestHandlerList(connectedHandlers,request);
+        int availablesize=availableList.size();
+        int index = (roundRobin.getAndAdd(1) + availablesize) % availablesize;
+        return availableList.get(index);
     }
 
     public void stop() {
@@ -180,5 +180,23 @@ public class ConnectManage {
         signalAvailableHandler();
         threadPoolExecutor.shutdown();
         eventLoopGroup.shutdownGracefully();
+    }
+
+    /**
+     * 根据request得接口，寻找可以处理request服务器
+    * @param connected
+     * @return
+     */
+    public List<RpcClientHandler> getRequestHandlerList(List<RpcClientHandler> connected,RpcRequest request){
+        List<RpcClientHandler> result=new ArrayList<RpcClientHandler>();
+        for (int i = 0; i < connected.size(); ++i) {
+            List<String> serverInterface=connected.get(i).getServerInterfaces();
+            for (int k = 0; k < serverInterface.size(); k++) {
+                if(serverInterface.get(k).equals(request.getClassName())){
+                    result.add(connected.get(i));
+                }
+            }
+        }
+        return result;
     }
 }
