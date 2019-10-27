@@ -1,8 +1,9 @@
 package com.nettyrpc.protocol;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ServerData {
+public class ServerData implements Serializable {
     private List<String> serverInterfaces;
     private String serverIp;
     private String serverPort;
