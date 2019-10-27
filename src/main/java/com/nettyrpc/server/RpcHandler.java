@@ -1,7 +1,7 @@
 package com.nettyrpc.server;
 
-import com.nettyrpc.protocol.RpcRequest;
-import com.nettyrpc.protocol.RpcResponse;
+import com.nettyrpc.interfaces.RpcRequest;
+import com.nettyrpc.interfaces.RpcResponse;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.cglib.reflect.FastClass;
-import net.sf.cglib.reflect.FastMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

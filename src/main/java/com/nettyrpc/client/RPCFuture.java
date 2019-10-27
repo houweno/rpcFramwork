@@ -1,7 +1,7 @@
 package com.nettyrpc.client;
 
-import com.nettyrpc.protocol.RpcRequest;
-import com.nettyrpc.protocol.RpcResponse;
+import com.nettyrpc.interfaces.RpcRequest;
+import com.nettyrpc.interfaces.RpcResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

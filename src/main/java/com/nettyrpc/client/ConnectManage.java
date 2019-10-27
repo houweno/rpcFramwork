@@ -1,7 +1,7 @@
 package com.nettyrpc.client;
 
-import com.nettyrpc.protocol.RpcRequest;
-import com.nettyrpc.protocol.ServerData;
+import com.nettyrpc.interfaces.RpcRequest;
+import com.nettyrpc.interfaces.ServerData;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;

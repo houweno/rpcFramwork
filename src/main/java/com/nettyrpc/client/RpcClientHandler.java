@@ -1,7 +1,7 @@
 package com.nettyrpc.client;
 
-import com.nettyrpc.protocol.RpcRequest;
-import com.nettyrpc.protocol.RpcResponse;
+import com.nettyrpc.interfaces.RpcRequest;
+import com.nettyrpc.interfaces.RpcResponse;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.nettyrpc.protocol;
+package com.nettyrpc.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

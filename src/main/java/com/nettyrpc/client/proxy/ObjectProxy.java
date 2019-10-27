@@ -3,7 +3,7 @@ package com.nettyrpc.client.proxy;
 import com.nettyrpc.client.ConnectManage;
 import com.nettyrpc.client.RPCFuture;
 import com.nettyrpc.client.RpcClientHandler;
-import com.nettyrpc.protocol.RpcRequest;
+import com.nettyrpc.interfaces.RpcRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

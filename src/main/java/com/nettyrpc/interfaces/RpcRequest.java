@@ -1,4 +1,4 @@
-package com.nettyrpc.protocol;
+package com.nettyrpc.interfaces;
 
 /**
  * RPC Request

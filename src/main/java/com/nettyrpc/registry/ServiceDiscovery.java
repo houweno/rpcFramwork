@@ -7,8 +7,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.nettyrpc.client.ConnectManage;
-import com.nettyrpc.protocol.ByteObject;
-import com.nettyrpc.protocol.ServerData;
+import com.nettyrpc.util.ByteObject;
+import com.nettyrpc.interfaces.ServerData;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;

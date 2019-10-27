@@ -1,13 +1,12 @@
 package com.nettyrpc.test.util;
 
 import com.nettyrpc.util.JsonUtil;
-import com.nettyrpc.protocol.RpcRequest;
-import com.nettyrpc.protocol.RpcResponse;
+import com.nettyrpc.interfaces.RpcRequest;
+import com.nettyrpc.interfaces.RpcResponse;
 import com.nettyrpc.util.SerializationUtil;
 import com.nettyrpc.test.client.Person;
 import com.nettyrpc.test.server.HelloServiceImpl;
 
-import java.io.IOException;
 import java.util.UUID;
 
 /**
