@@ -1,7 +1,7 @@
 package com.nettyrpc.test.server;
 
-import com.nettyrpc.test.client.HelloService;
-import com.nettyrpc.test.client.Person;
+import com.nettyrpc.test.api.HelloService;
+import com.nettyrpc.test.api.Person;
 import com.nettyrpc.server.RpcService;
 
 @RpcService(HelloService.class)

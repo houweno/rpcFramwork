@@ -1,4 +1,4 @@
-package com.nettyrpc.test.client;
+package com.nettyrpc.test.api;
 
 public interface HelloService {
     String hello(String name);

@@ -1,8 +1,8 @@
 package com.nettyrpc.test.server2;
 
 import com.nettyrpc.server.RpcService;
-import com.nettyrpc.test.client.PersonService;
-import com.nettyrpc.test.client.Person;
+import com.nettyrpc.test.api.PersonService;
+import com.nettyrpc.test.api.Person;
 
 import java.util.ArrayList;
 import java.util.List;

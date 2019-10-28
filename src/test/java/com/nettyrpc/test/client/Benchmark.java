@@ -1,8 +1,8 @@
-package com.nettyrpc.test.app;
+package com.nettyrpc.test.client;
 
 import com.nettyrpc.client.RpcClient;
 import com.nettyrpc.registry.ServiceDiscovery;
-import com.nettyrpc.test.client.HelloService;
+import com.nettyrpc.test.api.HelloService;
 
 /**
  * Created by houwenbo.
