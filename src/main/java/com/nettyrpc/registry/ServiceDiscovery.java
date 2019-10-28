@@ -7,8 +7,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.nettyrpc.client.ConnectManage;
-import com.nettyrpc.util.ByteObject;
 import com.nettyrpc.interfaces.ServerData;
+import com.nettyrpc.util.SerializationUtil;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
@@ -86,7 +86,7 @@ public class ServiceDiscovery {
             List<ServerData> dataList = new ArrayList<>();
             for (String node : nodeList) {
                 byte[] bytes = zk.getData(Constant.ZK_REGISTRY_PATH + "/" + node, false, null);
-                dataList.add((ServerData) ByteObject.ByteToObject(bytes));
+                dataList.add(SerializationUtil.deserialize(bytes,ServerData.class));
             }
             logger.debug("node data: {}", dataList);
             this.dataList = dataList;

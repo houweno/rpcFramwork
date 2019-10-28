@@ -35,7 +35,6 @@ public class RpcDecoder extends ByteToMessageDecoder {
         in.readBytes(data);
 
         Object obj = SerializationUtil.deserialize(data, genericClass);
-        //Object obj = JsonUtil.deserialize(data,genericClass); // Not use this, have some bugs
         out.add(obj);
     }
 

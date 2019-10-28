@@ -2,9 +2,9 @@ package com.nettyrpc.server;
 
 import com.nettyrpc.interfaces.*;
 import com.nettyrpc.registry.ServiceRegistry;
-import com.nettyrpc.util.ByteObject;
 import com.nettyrpc.util.RpcDecoder;
 import com.nettyrpc.util.RpcEncoder;
+import com.nettyrpc.util.SerializationUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -137,7 +137,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
             logger.info("Server started on port {}", port);
 
             if (serviceRegistry != null) {
-                serviceRegistry.register(ByteObject.ObjectToByte(serverData));
+                serviceRegistry.register(SerializationUtil.serialize(serverData));
             }
 
             future.channel().closeFuture().sync();
