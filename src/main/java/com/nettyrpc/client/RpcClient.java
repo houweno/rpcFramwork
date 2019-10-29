@@ -22,20 +22,12 @@ public class RpcClient {
             600L, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(65536));
 
     public RpcClient(String serverAddress) {
+
         this.serverAddress = serverAddress;
     }
 
     public RpcClient(ServiceDiscovery serviceDiscovery) {
         this.serviceDiscovery = serviceDiscovery;
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T> T create(Class<T> interfaceClass) {
-        return (T) Proxy.newProxyInstance(
-                interfaceClass.getClassLoader(),
-                new Class<?>[]{interfaceClass},
-                new ObjectProxy<T>(interfaceClass)
-        );
     }
 
     public static <T> IAsyncObjectProxy createAsync(Class<T> interfaceClass) {
