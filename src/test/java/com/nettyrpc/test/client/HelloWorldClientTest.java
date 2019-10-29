@@ -5,32 +5,24 @@ import com.nettyrpc.client.RPCFuture;
 import com.nettyrpc.client.RpcClient;
 import com.nettyrpc.client.proxy.IAsyncObjectProxy;
 import com.nettyrpc.registry.ServiceDiscovery;
-import com.nettyrpc.test.api.PersonService;
-import com.nettyrpc.test.api.Person;
+import com.nettyrpc.test.api.HelloWorldTest;
 
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-/**
- * Created by houwenbo.
- */
-public class PersonCallbackTest {
+public class HelloWorldClientTest {
     public static void main(String[] args) {
         ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
         final RpcClient rpcClient = new RpcClient(serviceDiscovery);
         final CountDownLatch countDownLatch = new CountDownLatch(1);
 
         try {
-            IAsyncObjectProxy client = rpcClient.createAsync(PersonService.class);
+            IAsyncObjectProxy client = rpcClient.createAsync(HelloWorldTest.class);
             int num = 5;
-            RPCFuture helloPersonFuture = client.call("GetTestPerson", "xiaoming", num);
+            RPCFuture helloPersonFuture = client.call("loadbalanceTest", "hwb");
             helloPersonFuture.addCallback(new AsyncRPCCallback() {
                 @Override
                 public void success(Object result) {
-                    List<Person> persons = (List<Person>) result;
-                    for (int i = 0; i < persons.size(); ++i) {
-                        System.out.println(persons.get(i));
-                    }
+                    System.out.println(result.toString());
                     countDownLatch.countDown();
                 }
 
