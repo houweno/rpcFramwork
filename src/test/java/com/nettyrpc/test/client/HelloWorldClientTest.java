@@ -16,23 +16,24 @@ public class HelloWorldClientTest {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
 
         try {
-            IAsyncObjectProxy client = rpcClient.createAsync(HelloWorldTest.class);
-            int num = 5;
-            RPCFuture helloPersonFuture = client.call("loadbalanceTest", "hwb");
-            helloPersonFuture.addCallback(new AsyncRPCCallback() {
-                @Override
-                public void success(Object result) {
-                    System.out.println(result.toString());
-                    countDownLatch.countDown();
-                }
+            for(int i=0;i<5;i++) {
+                IAsyncObjectProxy client = rpcClient.createAsync(HelloWorldTest.class);
+                int num = 5;
+                RPCFuture helloPersonFuture = client.call("loadbalanceTest", "hwb");
+                helloPersonFuture.addCallback(new AsyncRPCCallback() {
+                    @Override
+                    public void success(Object result) {
+                        System.out.println(result.toString());
+                        countDownLatch.countDown();
+                    }
 
-                @Override
-                public void fail(Exception e) {
-                    System.out.println(e);
-                    countDownLatch.countDown();
-                }
-            });
-
+                    @Override
+                    public void fail(Exception e) {
+                        System.out.println(e);
+                        countDownLatch.countDown();
+                    }
+                });
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
