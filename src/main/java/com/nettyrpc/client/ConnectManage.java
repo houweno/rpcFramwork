@@ -46,6 +46,10 @@ public class ConnectManage {
     private ConnectManage() {
     }
 
+    /**
+     * 双判断单例模式
+     * @return
+     */
     public static ConnectManage getInstance() {
         if (connectManage == null) {
             synchronized (ConnectManage.class) {
